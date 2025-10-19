@@ -29,3 +29,18 @@ plot = px.histogram(data_frame=df_plot, x='Age', color='Survived', barmode='grou
                     title="Age Distribution of Age",template='seaborn',facet_col='Survived')
 
 col1.plotly_chart(plot)
+
+# Create a pie chart using plotly express
+df_plot_pie = df_plot.loc[:,['PassengerId','Survived']].groupby('Survived').count().reset_index()
+df_plot_pie.rename({'PassengerId':'Count of passengers'}, axis='columns', inplace=True)
+
+pie_plot = px.pie(data_frame=df_plot_pie, title='Count of passengers that survived', values='Count of passengers',names='Survived',template='seaborn')
+
+#attach to dashboard
+col2.plotly_chart(pie_plot)
+
+#add a boxplot of the fare prices
+box_plot = px.box(data_frame=df_plot,x='Survived', y='Fare', color='Survived', title='Fare Price Distribution',template='seaborn')
+#attach to dashboard
+st.plotly_chart(box_plot)
+
